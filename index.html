@@ -1,0 +1,1123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Global Peace Pledge</title>
+    <link rel="Shortcut Icon" href="./assets/favicon.ico">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            container: { center: true, padding: '1rem' },
+            fontFamily: { display: ["ui-sans-serif", "system-ui", "Inter", "sans-serif"] },
+            keyframes: {
+              float: {
+                '0%,100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-8px)' }
+              },
+              spinSlow: { '0%': { transform: 'rotate(0)' }, '100%': { transform: 'rotate(360deg)' } },
+            },
+            animation: { float: 'float 6s ease-in-out infinite', 'spin-slow': 'spinSlow 6s linear infinite' },
+          },
+        },
+      };
+    </script>
+    <!-- PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <style>
+      /* gradient mesh background */
+      .mesh:before, .mesh:after{content:"";position:absolute;inset:auto;filter:blur(60px);opacity:.4;z-index:-1}
+      .mesh:before{top:-80px;left:-40px;width:480px;height:480px;background:radial-gradient(closest-side,#60a5fa,transparent 70%)}
+      .mesh:after{right:-60px;bottom:-120px;width:520px;height:520px;background:radial-gradient(closest-side,#f59e0b,transparent 70%)}
+      
+      /* Certificate styles */
+      .certificate-template {
+        width: 800px;
+        height: 600px;
+        background: white;
+        position: relative;
+        font-family: 'Georgia', serif;
+      }
+      
+      .certificate-border {
+        border: 10px solid;
+        border-image: linear-gradient(45deg, #3b82f6, #10b981, #3b82f6) 1;
+        margin: 20px;
+        padding: 40px;
+        height: calc(100% - 40px);
+        box-sizing: border-box;
+      }
+      
+      .signature-pad {
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        background: white;
+        cursor: crosshair;
+      }
+      .shadimg{
+        border-radius: 20px;
+        box-shadow: 4px 4px 49px 0 #090353;
+      }
+      @media only screen and (max-width: 600px) {
+  .header-align {
+    text-align: center;
+    }
+}
+    </style>
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white text-gray-800 font-display selection:bg-blue-200/60">
+    <!-- NAV -->
+    <header class="sticky top-0 z-40 backdrop-blur bg-white/70">
+      <div class="container max-w-7xl flex items-center justify-between py-4">
+        <a href="#" class="flex items-center gap-3">
+          <img src="./assets/logo.png" alt="UPF Logo" width="60%" />
+          <!-- <span class="font-semibold tracking-tight text-blue-900">Universal Peace Foundation</span> -->
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-sm">
+          <a class="hover:text-blue-900" href="#about">About</a>
+          <a class="hover:text-blue-900" href="#milestones">Milestones</a>
+          <a class="hover:text-blue-900" href="#pledge">Pledge</a>
+        </nav>
+        <!-- <a href="#pledge" class="hidden sm:inline-flex h-10 items-center rounded-full px-5 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">Sign the Pledge</a> -->
+      </div>
+    </header>
+
+    <!-- HERO (no boxes; full-bleed composition) -->
+    <section class="relative overflow-hidden">
+      <!-- <div class="absolute inset-0 -z-10">
+        <div class="h-[60vh] md:h-[100vh] bg-gradient-to-br from-indigo-900 via-blue-800 to-violet-600"></div>
+      </div> -->
+      <div class="bg-gradient-to-br from-indigo-900 via-blue-800 to-violet-600">
+        <div class="grid lg:grid-cols-2 gap-10 items-center container max-w-7xl py-16 md:py-24 lg:py-10 text-white">
+          <div>
+            <p class="uppercase tracking-widest text-white/100 text-xs md:text-sm">November 11, 2025 • Pondicherry, India</p>
+            <h1 class="mt-3 text-4xl md:text-5xl font-extrabold leading-tight">Pledge for <span class="inline bg-gradient-to-r from-amber-300 to-white bg-clip-text text-transparent">Global Peace</span></h1>
+            <p class="mt-4 text-md md:text-xl uppercase text-white/90 max-w-xl">Join Millions in a Sacred Pledge for Peace</p>
+            <p class="mt-4 text-md md:text-lg text-white/90 max-w-xl">On this Global Peace Day, we invite hearts and minds from every corner of our world to unite in purpose. Your digital signature represents more than support—it embodies hope, compassion, and the collective power of humanity working toward a more peaceful tomorrow. Together, we can transform our shared vision of peace into reality</p>
+            <!-- <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a href="#pledge" class="inline-flex h-12 items-center rounded-full px-6 text-base font-semibold text-blue-900 bg-white hover:bg-blue-50">Sign Your Pledge</a>
+              <a href="#about" class="inline-flex h-12 items-center rounded-full px-6 text-base font-semibold border border-white/30 hover:bg-white/10">Learn More</a>
+            </div> -->
+            <div class="mt-6 flex items-center gap-2 text-md text-white/80">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-10 w-10 animate-spin-slow" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              <span>Millions united for peace</span>
+            </div>
+          </div>
+          <div class="relative lg:justify-self-end mesh">
+            <img src="./assets/gmahan.jpg" alt="Guru Mahan" class="w-full max-w-xl aspect-[4/3] object-cover ring-1 ring-white/30" />
+          </div>
+        </div>
+      </div>
+      <!-- angled separator -->
+      <!-- <div class="h-16 bg-gradient-to-b from-transparent to-white -mt-8"></div> -->
+    </section>
+
+    <!-- ABOUT (airy layout, no boxes) -->
+    <section id="about" class="container max-w-7xl py-10 md:py-10">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-4 mx-auto relative">
+          <img src="./assets/ggmahan.png" alt="Gurumahan portrait" class="h-56 w-56 md:h-64 md:w-64 rounded-full object-cover mx-auto lg:mx-0" />
+          <div class="absolute -z-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 top-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-blue-200/40 blur-2xl animate-float"></div>
+          <p class="lg:text-center mt-3 text-sm text-gray-500 italic">World Peace Ambassador</p>
+        </div>
+        <div class="lg:col-span-8">
+            <div class="header-align">
+          <h2 class="text-3xl md:text-4xl font-bold inline bg-gradient-to-r from-blue-300 to-green-600 bg-clip-text text-transparent my-4">About His Holiness Gurumahan</h2>
+          <p class="text-blue-900 font-semibold mt-4">Founder & Spiritual Leader of the Universal Peace Foundation</p>
+          </div>
+          <p class="mt-5 text-lg leading-relaxed text-gray-700 max-w-2xl">His Holiness GuruMahan is a distinguished spiritual leader and visionary who has dedicated his life to fostering global harmony and peace. Since 1992, he has been leading transformative Peace Programs that have touched millions of lives across the world through the Universal Peace Foundation.</p>
+          <p class="mt-5 text-lg leading-relaxed text-gray-700 max-w-2xl">His profound mission centers on creating a peaceful and harmonious world through the timeless practices of meditation, yoga, and the fundamental principle of universal brotherhood. His Holiness believes that true peace begins within each individual soul and radiates outward to encompass families, communities, nations, and ultimately, our entire global family.</p>
+          <figure class="mt-6">
+            <blockquote class="text-xl italic text-gray-800">“Peace is not merely the absence of conflict, but the presence of love, understanding, and compassion in every heart. When we unite in the spirit of universal brotherhood, we become instruments of divine harmony.”</blockquote>
+            <figcaption class="mt-2 text-blue-900 font-semibold">— His Holiness Gurumahan</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- MILESTONES (horizontal timeline; no section boxes) -->
+    <section id="milestones" class="bg-gradient-to-b from-white via-blue-50/50 to-white py-12 md:py-20">
+      <div class="container max-w-7xl">
+        <h3 class="text-3xl md:text-4xl font-bold text-gray-700 text-center">A Journey of Peace Milestones & Recognition</h3>
+        <p class="text-center text-gray-600 mt-2">Throughout his remarkable journey, His Holiness Gurumahan has received international recognition for his unwavering commitment to world peace and spiritual enlightenment.</p>
+
+        <div class="relative mt-12">
+          <div class="absolute left-0 right-0 top-6 h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent"></div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <div class="relative pt-10">
+              <span class="absolute -top-2 left-0 inline-flex items-center gap-2  bg-gradient-to-r from-blue-500 to-blue-900 text-white px-3 py-1 text-xs  w-48">1992</span>
+              <h4 class="text-xl font-bold text-blue-900">Foundation For Global Peace</h4>
+              <p class="text-gray-700 mt-1">Initiated the Peace Program and established the Universal Peace Foundation.</p>
+            </div>
+            <div class="relative pt-10">
+              <span class="absolute -top-2 left-0 inline-flex items-center gap-2  bg-gradient-to-r from-amber-500 to-yellow-800 text-white px-3 py-1 text-xs  w-48">2011</span>
+              <h4 class="text-xl font-bold text-amber-900">Ambassador For Peace</h4>
+              <p class="text-gray-700 mt-1">Recognized for outstanding contributions to global peace initiatives.</p>
+            </div>
+            <div class="relative pt-10">
+              <span class="absolute -top-2 left-0 inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-800 text-white px-3 py-1 text-xs  w-48">International</span>
+              <h4 class="text-xl font-bold text-purple-900">Global Recognition</h4>
+              <p class="text-gray-700 mt-1">Honored abroad for fostering unity among diverse communities.</p>
+            </div>
+            <div class="relative pt-10">
+              <span class="absolute -top-2 left-0 inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-800 text-white px-3 py-1 text-xs  w-48">2025</span>
+              <h4 class="text-xl font-bold text-green-900">Guardian Of Global Peace</h4>
+              <p class="text-gray-700 mt-1">Leading the Global Peace Day celebration in Pondicherry on Nov 11, 2025.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLEDGE QUOTE (hero-ish band) -->
+    <section class="relative overflow-hidden py-14 md:py-20">
+      <div class="absolute inset-0 -z-10">
+        <div class="h-full bg-gradient-to-r from-blue-50 to-green-50">
+          <img src="./assets/peace.png" />
+        </div>
+      </div>
+      <div class="container max-w-3xl text-center bg-white bg-opacity-50 py-4">
+        <h3 class="text-3xl md:text-4xl font-bold text-gray-700 text-center">The Global Peace Pledge</h3>
+        <p class="mt-5 text-lg text-center text-gray-700">I add my voice and my signature to the global call for <span class="text-blue-900  font-bold uppercase">World Peace</span>.</p>
+        <p class="mt-3 text-md text-gray-700">I believe a <span class="text-blue-900 font-bold">BETTER</span>, more <span class="text-blue-900 font-bold">PEACEFUL</span> world is possible, and it starts with <span class="text-blue-900 font-bold">ME</span>.</p>
+        <p class="lg:text-center mt-3 text-sm text-gray-500 italic mt-4">Read this pledge with your heart before signing below</p>
+      </div>
+    </section>
+
+    <!-- PLEDGE FORM (clean, high-contrast, not boxed) -->
+    <section id="pledge"  class="mb-16 px-4 pt-10 relative">
+      <div class="bg_mask">
+        <img src="./assets/bg1.png" alt="">
+      </div>
+    <div class="mx-auto max-w-3xl rounded-xl border border-blue-200 bg-white bg-opacity-50 shadow-xl relative">
+      <!-- Card Header -->
+      <div class="flex flex-col items-center space-y-2 rounded-t-xl bg-gradient-to-r from-blue-500 to-blue-900 p-8 text-center text-white">
+        <div class="mb-1 flex items-center justify-center gap-3">
+          <h1 class="text-3xl font-bold">Sign Your Peace Pledge</h1>
+        </div>
+
+        <p class="text-lg text-blue-100">Add your voice to the global movement for peace</p>
+      </div>
+
+      <!-- Card Body -->
+      <div class="p-6 sm:p-8">
+        <form id="contactForm" class="space-y-6" action="#" method="post">
+          <!-- Name Grid -->
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <!-- First Name -->
+            <div class="space-y-2">
+              <label for="firstName" class="text-sm font-semibold leading-none text-blue-900">First Name *</label>
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                required
+                placeholder="Enter your first name"
+                class="h-11 w-full rounded-md border border-blue-200 bg-white px-3 text-base placeholder-slate-400 outline-none ring-blue-400 transition focus:border-blue-400 focus:ring-2 md:text-sm"
+              />
+            </div>
+
+            <!-- Last Name -->
+            <div class="space-y-2">
+              <label for="lastName" class="text-sm font-semibold leading-none text-blue-900">Last Name *</label>
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                required
+                placeholder="Enter your last name"
+                class="h-11 w-full rounded-md border border-blue-200 bg-white px-3 text-base placeholder-slate-400 outline-none ring-blue-400 transition focus:border-blue-400 focus:ring-2 md:text-sm"
+              />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="space-y-2">
+            <label for="email" class="text-sm font-semibold leading-none text-blue-900">Email Address *</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="Enter your email address"
+              class="h-11 w-full rounded-md border border-blue-200 bg-white px-3 text-base placeholder-slate-400 outline-none ring-blue-400 transition focus:border-blue-400 focus:ring-2 md:text-sm"
+            />
+          </div>
+
+          <!-- Country -->
+          <div class="space-y-2">
+            <label for="country" class="text-sm font-semibold leading-none text-blue-900">Country *</label>
+            <select
+              id="country"
+              name="country"
+              required
+              class="h-11 w-full rounded-md border border-blue-200 bg-white px-3 text-sm outline-none ring-blue-400 transition focus:border-blue-400 focus:ring-2"
+            >
+              <option value="" selected disabled>Select your country</option>
+              <option>Afghanistan</option><option>Albania</option><option>Algeria</option>
+              <option>Argentina</option><option>Armenia</option><option>Australia</option>
+              <option>Austria</option><option>Azerbaijan</option><option>Bahrain</option>
+              <option>Bangladesh</option><option>Belarus</option><option>Belgium</option>
+              <option>Bolivia</option><option>Bosnia and Herzegovina</option><option>Brazil</option>
+              <option>Bulgaria</option><option>Cambodia</option><option>Canada</option>
+              <option>Chile</option><option>China</option><option>Colombia</option>
+              <option>Costa Rica</option><option>Croatia</option><option>Cuba</option>
+              <option>Cyprus</option><option>Czech Republic</option><option>Denmark</option>
+              <option>Dominican Republic</option><option>Ecuador</option><option>Egypt</option>
+              <option>El Salvador</option><option>Estonia</option><option>Ethiopia</option>
+              <option>Finland</option><option>France</option><option>Georgia</option>
+              <option>Germany</option><option>Ghana</option><option>Greece</option>
+              <option>Guatemala</option><option>Honduras</option><option>Hungary</option>
+              <option>Iceland</option><option>India</option><option>Indonesia</option>
+              <option>Iran</option><option>Iraq</option><option>Ireland</option>
+              <option>Israel</option><option>Italy</option><option>Jamaica</option>
+              <option>Japan</option><option>Jordan</option><option>Kazakhstan</option>
+              <option>Kenya</option><option>Kuwait</option><option>Latvia</option>
+              <option>Lebanon</option><option>Libya</option><option>Lithuania</option>
+              <option>Luxembourg</option><option>Malaysia</option><option>Malta</option>
+              <option>Mexico</option><option>Morocco</option><option>Netherlands</option>
+              <option>New Zealand</option><option>Nicaragua</option><option>Nigeria</option>
+              <option>Norway</option><option>Pakistan</option><option>Panama</option>
+              <option>Paraguay</option><option>Peru</option><option>Philippines</option>
+              <option>Poland</option><option>Portugal</option><option>Qatar</option>
+              <option>Romania</option><option>Russia</option><option>Saudi Arabia</option>
+              <option>Serbia</option><option>Singapore</option><option>Slovakia</option>
+              <option>Slovenia</option><option>South Africa</option><option>South Korea</option>
+              <option>Spain</option><option>Sri Lanka</option><option>Sweden</option>
+              <option>Switzerland</option><option>Syria</option><option>Taiwan</option>
+              <option>Thailand</option><option>Tunisia</option><option>Turkey</option>
+              <option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option>
+              <option>United States</option><option>Uruguay</option><option>Venezuela</option>
+              <option>Vietnam</option><option>Yemen</option>
+            </select>
+          </div>
+
+          <!-- Signature Pad -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold leading-none text-blue-900">Digital Signature *</label>
+
+            <div class="space-y-3">
+              <div class="flex flex-wrap gap-2">
+                <button type="button"
+                  id="drawModeBtn"
+                  class="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-blue-600 px-3 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+                  Draw Signature
+                </button>
+                <label
+                  class="inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-3 text-sm font-medium transition hover:bg-slate-50 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-400 focus-within:ring-offset-2"
+                >
+                  <input type="file" accept="image/*" class="sr-only" id="signatureUpload" />
+                  Upload Signature
+                </label>
+              </div>
+
+              <div class="relative overflow-hidden rounded-lg border-2 border-blue-200 bg-white">
+                <canvas id="signatureCanvas" class="signature-pad h-40 w-full"></canvas>
+                <div class="pointer-events-none absolute inset-0 flex items-center justify-center" id="signaturePlaceholder">
+                  <p class="text-sm text-gray-400">Sign here with your mouse or finger</p>
+                </div>
+              </div>
+
+              <div class="flex gap-2">
+                <button type="button" id="clearSignature"
+                        class="flex h-9 items-center gap-2 rounded-md border border-slate-300 bg-white px-3 text-sm font-medium transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+                  <!-- Refresh Icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                    <path d="M21 3v5h-5"></path>
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                    <path d="M8 16H3v5"></path>
+                  </svg>
+                  Clear
+                </button>
+                <button type="button" id="saveSignature"
+                        class="flex h-9 items-center gap-2 rounded-md bg-green-600 text-white px-3 text-sm font-medium transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
+                  <!-- Download Icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7,10 12,15 17,10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  Save Signature
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="pt-2 space-y-3">
+            <button
+              type="submit"
+              class="group inline-flex h-12 w-full items-center justify-center gap-3 rounded-lg bg-gradient-to-r from-blue-500 to-blue-900 px-5 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Pledge for Global Peace
+            </button>
+            
+            <!-- Certificate Download Buttons (hidden initially) -->
+            <div id="certificateButtons" class="space-y-2 hidden">
+              <button
+                type="button"
+                id="downloadCertificatePDF"
+                class="group inline-flex h-12 w-full items-center justify-center gap-3 rounded-lg bg-gradient-to-r from-green-500 to-green-700 px-5 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:from-green-600 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14,2 14,8 20,8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10,9 9,9 8,9"></polyline>
+                </svg>
+                Download Certificate (PDF)
+              </button>
+              
+              <button
+                type="button"
+                id="downloadCertificateImage"
+                class="group inline-flex h-12 w-full items-center justify-center gap-3 rounded-lg bg-gradient-to-r from-purple-500 to-purple-700 px-5 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:from-purple-600 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21,15 16,10 5,21"></polyline>
+                </svg>
+                Download Certificate (Image)
+              </button>
+            </div>
+          </div>
+          
+          <!-- Message Display Area -->
+          <div id="formMessage" class="mt-4 text-center hidden"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hidden Certificate Template for Generation -->
+  <div id="certificateTemplate" class="certificate-template" style="position: absolute; left: -9999px; top: -9999px;">
+    <div class="certificate-border">
+      <div class="text-center">
+        <!-- Header -->
+        <div class="flex items-center justify-center mb-6">
+          <div style="width: 60px; height: 60px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px;">UPF</div>
+        </div>
+        
+        <h3 style="font-size: 14px; letter-spacing: 0.18em; color: #1e293b; margin-bottom: 16px; font-weight: 600;">UNIVERSAL PEACE FOUNDATION</h3>
+        <h1 style="font-size: 36px; font-weight: 800; color: #0f172a; margin-bottom: 24px; font-family: Georgia, serif;">CERTIFICATE OF APPRECIATION</h1>
+        
+        <!-- Divider -->
+        <div style="display: flex; justify-content: center; margin-bottom: 32px;">
+          <div style="height: 3px; width: 160px; background: linear-gradient(to right, #059669, #3b82f6); border-radius: 9999px;"></div>
+        </div>
+        
+        <!-- Body -->
+        <p style="font-size: 16px; color: #475569; margin-bottom: 12px;">This certificate is proudly presented to</p>
+        <p id="certificateName" style="font-size: 42px; font-weight: bold; color: #0f172a; margin-bottom: 24px; font-family: Georgia, serif;"></p>
+        <p style="font-size: 16px; line-height: 1.6; color: #334155; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+          in sincere appreciation for joining millions worldwide in the Global Peace Pledge,
+          demonstrating commitment to world harmony and universal brotherhood.
+        </p>
+        
+        <!-- Signatures & Meta Section -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; margin-top: 40px;">
+          <!-- Left Side: His Holiness GuruMahan -->
+          <div style="text-align: center;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: #f3f4f6; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; color: #6b7280; font-weight: bold;">GM</div>
+            <p style="font-size: 14px; font-weight: 600; color: #334155;">His Holiness GuruMahan</p>
+            <p style="font-size: 12px; color: #64748b;">Founder & Spiritual Leader</p>
+          </div>
+          
+          <!-- Right Side: Global Peace Day -->
+          <div style="text-align: center; border-left: 1px solid #e2e8f0; padding-left: 12px; padding-top: 8px; padding-bottom: 8px;">
+            <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">Global Peace Day</p>
+            <p style="font-size: 18px; font-weight: bold; color: #0f172a; margin: 4px 0;">November 11, 2025</p>
+            <p style="font-size: 14px; color: #475569;">Pondicherry, India</p>
+            <p style="font-size: 12px; color: #64748b; margin-top: 8px;">With support from State & Central Governments of India</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-700 text-center0">Your Certificate of Appreciation</h2>
+      <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-3xl mx-auto">
+      Upon signing the Global Peace Pledge, you will receive a beautifully designed,
+      personalized certificate perfect for framing and display.
+      </p>
+      </div>
+      <!-- Content Grid -->
+      <div class="mx-auto max-w-3xl rounded-xl border border-blue-200 bg-white shadow-xl">
+      <!-- Certificate Preview Card -->
+      <div class="relative">
+      <!-- soft gradient backdrop -->
+      <!-- <div class="absolute -inset-4 -z-10 rounded-2xl bg-gradient-to-br from-amber-50 via-white to-sky-50 blur-sm"></div> -->
+
+
+      <article aria-label="Certificate preview" class="bg-white overflow-hidden">
+      <!-- decorative frame -->
+      <div class="p-1 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400">
+      <div class="bg-white p-8 sm:p-10">
+      <!-- logo + title -->
+      <div class="flex items-center justify-center gap-3">
+      <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/8bf2501a9_UPF.png"
+      alt="Universal Peace Foundation" class="h-12 w-auto"/>
+      </div>
+
+
+      <h3 class="mt-6 text-center font-semibold tracking-[0.18em] text-slate-800 text-xs">UNIVERSAL PEACE FOUNDATION</h3>
+      <h1 class="mt-3 text-center text-2xl sm:text-3xl font-extrabold text-slate-900">CERTIFICATE OF APPRECIATION</h1>
+
+
+      <!-- divider -->
+      <div class="mt-6 flex items-center justify-center">
+      <span class="inline-block h-[3px] w-40 bg-gradient-to-r from-green-600 to-blue-500 rounded-full"></span>
+      </div>
+
+
+      <!-- body copy -->
+      <p class="mt-8 text-center text-sm text-slate-600">This certificate is proudly presented to</p>
+      <p id="previewCertificateName" class="mt-2 text-center text-3xl sm:text-4xl font-serif font-bold text-slate-900">[Your Name]</p>
+      <p class="mt-4 text-center text-sm sm:text-base leading-relaxed text-slate-700">
+      in sincere appreciation for joining millions worldwide in the Global Peace Pledge,
+      demonstrating commitment to world harmony and universal brotherhood.
+      </p>
+
+
+      <!-- signatures & meta -->
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8 items-end">
+      <!-- signatory -->
+      <div class="text-center">
+      <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/45fcfa489_image.png"
+      alt="His Holiness GuruMahan" class="mx-auto w-24 h-24 rounded-full object-cover shadow"/>
+      <!-- <div class="mt-3 h-px bg-slate-300"></div> -->
+      <p class="mt-2 text-sm font-semibold text-slate-700">His Holiness GuruMahan</p>
+      <p class="text-xs text-slate-500">Founder &amp; Spiritual Leader</p>
+      </div>
+
+
+      <!-- date & location -->
+      <div class="text-center sm:border-l border-slate-200 px-3 py-2">
+      <p class="text-xs uppercase tracking-wide text-slate-500">Global Peace Day</p>
+      <p class="mt-1 text-base font-bold text-slate-900">November 11, 2025</p>
+      <p>Pondicherry, India</p>
+      <p>With support from State & Central Governments of India</p>
+    </section>
+
+    <section class="relative mx-auto max-w-7xl mt-10">
+      <div class="mx-auto max-w-3xl bg-white text-center">
+        <p class="mt-6 text-center font-semibold tracking-[0.18em] text-slate-800 text-md uppercase">Perfect for Framing & Display</p>
+        <p>This premium certificate is designed for framing and serves as a lasting reminder of your commitment to world peace. Display it proudly in your living space or office to inspire others and commemorate this meaningful moment.</p>
+      </div>
+    </section>
+    <!-- Sticky CTA on mobile for visibility -->
+    <!-- <div class="fixed bottom-3 inset-x-3 sm:hidden z-50">
+      <a href="#pledge" class="block text-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 shadow-lg">Sign the Pledge</a>
+    </div> -->
+    <section id="about" class="container max-w-7xl py-10 md:py-10">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-8">
+            <div class="header-align">
+          <h2 class="text-3xl md:text-4xl font-bold inline bg-gradient-to-r from-blue-300 to-green-600 bg-clip-text text-transparent my-4">About the Universal Peace Foundation</h2>
+          <p class="mt-5 text-lg leading-relaxed text-blue-900 font-semibold max-w-2xl"><B>OUR MISSION</B></p>
+          </div>
+          <p class="mt-5 text-lg leading-relaxed text-gray-700">Under the guidance of His Holiness Gurumahan, the Universal Peace Foundation is dedicated to fostering global harmony through education, spiritual practices, dialogue, and compassionate action. We believe that lasting peace begins within each individual and expands outward to communities, nations, and the world.</p>
+          <p class="mt-5 text-lg leading-relaxed text-blue-900 font-semibold max-w-2xl header-align"><B>GLOBAL PEACE DAY 2025</B></p>
+          <p class="mt-5 text-lg leading-relaxed text-gray-700 ">The historic Global Peace Day celebration in Pondicherry on November 11, 2025, represents the culmination of decades of peace work. With official backing from Indian state and central governments, this event will unite millions of hearts in prayer and pledge for world peace.</p>
+        </div>
+        <div class="lg:col-span-4 mx-auto relative">
+          <img src="./assets/meditation.png" alt="Gurumahan portrait" class="shadow-yellow-50 shadimg" />
+          <div class="absolute -z-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 top-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-blue-200/40 blur-2xl animate-float"></div>
+        </div>
+      </div>
+    </section>
+    <footer class="py-10 text-center text-sm text-gray-600">© <span id="y"></span> Global Peace Pledge</footer>
+<script>
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+        
+            const form = e.target;
+            const formData = new FormData(form);
+            const formMessage = document.getElementById("formMessage");
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            
+            // Validate required fields before sending
+            const firstName = formData.get('firstName');
+            const lastName = formData.get('lastName');
+            const email = formData.get('email');
+            const country = formData.get('country');
+            
+            if (!firstName || !lastName || !email || !country) {
+                formMessage.innerText = "Please fill in all required fields.";
+                formMessage.className = "mt-4 text-center p-3 rounded-md bg-red-50 text-red-600 border border-red-200";
+                formMessage.classList.remove("hidden");
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                formMessage.innerText = "Please enter a valid email address.";
+                formMessage.className = "mt-4 text-center p-3 rounded-md bg-red-50 text-red-600 border border-red-200";
+                formMessage.classList.remove("hidden");
+                return;
+            }
+            
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<svg class="animate-spin h-5 w-5 mr-3 inline-block" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Submitting...';
+            formMessage.classList.add("hidden");
+        
+            fetch("contact.php", {
+                method: "POST",
+                body: formData,
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Server error: ${res.status} ${res.statusText}`);
+                }
+                return res.text().then(text => {
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        console.error('Server response:', text);
+                        throw new Error('Invalid server response format');
+                    }
+                });
+            })
+            .then(data => {
+                if (data.type === "success") {
+                    form.reset();
+                    clearSignature(); // Clear the signature pad
+                    formMessage.innerText = data.text;
+                    formMessage.className = "mt-4 text-center p-4 rounded-md bg-green-50 text-green-800 border border-green-200";
+                    
+                    // Show certificate download buttons
+                    const certificateButtons = document.getElementById('certificateButtons');
+                    if (certificateButtons) {
+                        certificateButtons.classList.remove('hidden');
+                    }
+                } else {
+                    formMessage.innerText = data.text || "An error occurred.";
+                    formMessage.className = "mt-4 text-center p-3 rounded-md bg-red-50 text-red-600 border border-red-200";
+                }
+                formMessage.classList.remove("hidden");
+            })
+            .catch(err => {
+                console.error('Form submission error:', err);
+                let errorMessage = "Sorry, there was a connection error. Please check your internet connection and try again.";
+                
+                // Provide more specific error messages
+                if (err.message.includes('Failed to fetch')) {
+                    errorMessage = "Cannot connect to server. Please check if the server is running and try again.";
+                } else if (err.message.includes('Server error')) {
+                    errorMessage = "Server error occurred. Please try again in a few moments.";
+                } else if (err.message.includes('Invalid server response')) {
+                    errorMessage = "Server returned an invalid response. Please contact support if this persists.";
+                }
+                
+                formMessage.innerText = errorMessage;
+                formMessage.className = "mt-4 text-center p-3 rounded-md bg-red-50 text-red-600 border border-red-200";
+                formMessage.classList.remove("hidden");
+            })
+            .finally(() => {
+                // Restore button state
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            });
+        });
+        </script>
+    <script>
+      // Year
+      document.getElementById('y').textContent = new Date().getFullYear();
+
+      // Global variables
+      let userSignatureData = null;
+      let pledgeData = {};
+
+      // Real-time name updates in certificate preview
+      function updateCertificatePreview() {
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const previewNameElement = document.getElementById('previewCertificateName');
+        
+        if (firstName || lastName) {
+          const fullName = `${firstName} ${lastName}`.trim();
+          previewNameElement.textContent = fullName;
+          previewNameElement.style.color = '#0f172a';
+        } else {
+          previewNameElement.textContent = '[Your Name]';
+          previewNameElement.style.color = '#94a3b8';
+        }
+      }
+
+      // Add event listeners for real-time updates
+      document.getElementById('firstName').addEventListener('input', updateCertificatePreview);
+      document.getElementById('lastName').addEventListener('input', updateCertificatePreview);
+
+      // Enhanced signature pad functionality
+      const canvas = document.getElementById('signatureCanvas');
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
+      let hasSignature = false;
+
+      function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * ratio;
+        canvas.height = rect.height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#2563eb';
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function getEventPosition(e) {
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches ? e.touches[0] : e;
+        return {
+          x: touch.clientX - rect.left,
+          y: touch.clientY - rect.top
+        };
+      }
+
+      function startDrawing(e) {
+        drawing = true;
+        hasSignature = true;
+        const pos = getEventPosition(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        document.getElementById('signaturePlaceholder').style.display = 'none';
+      }
+
+      function draw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const pos = getEventPosition(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+      }
+
+      function stopDrawing() {
+        drawing = false;
+        if (hasSignature) {
+          userSignatureData = canvas.toDataURL('image/png');
+        }
+      }
+
+      function clearSignature() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        hasSignature = false;
+        userSignatureData = null;
+        document.getElementById('signaturePlaceholder').style.display = 'flex';
+      }
+
+      // Initialize canvas
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      // Mouse events
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mouseleave', stopDrawing);
+
+      // Touch events
+      canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        startDrawing(e);
+      }, { passive: false });
+      
+      canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        draw(e);
+      }, { passive: false });
+      
+      canvas.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        stopDrawing();
+      }, { passive: false });
+
+      // Signature upload functionality
+      document.getElementById('signatureUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            const img = new Image();
+            img.onload = function() {
+              clearSignature();
+              const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+              const x = (canvas.width - img.width * scale) / 2;
+              const y = (canvas.height - img.height * scale) / 2;
+              ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+              hasSignature = true;
+              userSignatureData = canvas.toDataURL('image/png');
+              document.getElementById('signaturePlaceholder').style.display = 'none';
+            };
+            img.src = event.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Button event listeners
+      document.getElementById('clearSignature').addEventListener('click', clearSignature);
+      
+      document.getElementById('saveSignature').addEventListener('click', function() {
+        if (hasSignature && userSignatureData) {
+          const link = document.createElement('a');
+          link.download = 'peace-pledge-signature.png';
+          link.href = userSignatureData;
+          link.click();
+        } else {
+          alert('Please create a signature first!');
+        }
+      });
+
+      // Form submission with certificate generation
+      document.querySelector('#pledge form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate signature
+        if (!hasSignature || !userSignatureData) {
+          alert('Please provide your digital signature before submitting the pledge.');
+          return;
+        }
+
+        // Collect form data
+        const formData = new FormData(e.target);
+        pledgeData = {
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          email: formData.get('email'),
+          country: formData.get('country'),
+          signature: userSignatureData,
+          submissionDate: new Date().toISOString()
+        };
+
+        // Validate required fields
+        if (!pledgeData.firstName || !pledgeData.lastName || !pledgeData.email || !pledgeData.country) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+
+        // Show success message and certificate options
+        alert('Thank you for pledging for Global Peace! Your certificate is ready for download.');
+        document.getElementById('certificateButtons').classList.remove('hidden');
+        
+        // Scroll to certificate buttons
+        document.getElementById('certificateButtons').scrollIntoView({ behavior: 'smooth' });
+      });
+
+      // Certificate generation functions
+      function createCertificateCanvas() {
+        return new Promise((resolve) => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          
+          // Set high-resolution canvas size for crisp output
+          const scale = 3; // Higher scale for better quality
+          canvas.width = 800 * scale;
+          canvas.height = 600 * scale;
+          
+          // Scale the context to match the higher resolution
+          ctx.scale(scale, scale);
+          
+          // Enable better image smoothing
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          
+          // Fill background
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, 800, 600);
+          
+          // Draw gradient border (matching the preview)
+          const borderGradient = ctx.createLinearGradient(0, 0, 800, 0);
+          borderGradient.addColorStop(0, '#60a5fa'); // blue-400
+          borderGradient.addColorStop(0.5, '#4ade80'); // green-400
+          borderGradient.addColorStop(1, '#60a5fa'); // blue-400
+          
+          ctx.strokeStyle = borderGradient;
+          ctx.lineWidth = 8;
+          ctx.strokeRect(4, 4, 792, 592);
+          
+          // Inner white background with padding
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(20, 20, 760, 560);
+          
+          let imagesLoaded = 0;
+          const totalImages = 2;
+          
+          // Load UPF logo with higher quality
+          const upfLogo = new Image();
+          upfLogo.crossOrigin = 'anonymous';
+          upfLogo.onload = function() {
+            // Draw UPF logo with anti-aliasing
+            ctx.save();
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(upfLogo, 320, 35, 160, 50); // Larger, clearer logo
+            ctx.restore();
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) completeDrawing();
+          };
+          upfLogo.onerror = function() {
+            // Fallback: draw crisp UPF text logo
+            ctx.fillStyle = '#3b82f6';
+            ctx.beginPath();
+            ctx.arc(400, 60, 30, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('UPF', 400, 60);
+            
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) completeDrawing();
+          };
+          upfLogo.src = 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/8bf2501a9_UPF.png';
+          
+          // Load GuruMahan's photo with higher quality
+          const gurumahanPhoto = new Image();
+          gurumahanPhoto.crossOrigin = 'anonymous';
+          gurumahanPhoto.onload = function() {
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) completeDrawing();
+          };
+          gurumahanPhoto.onerror = function() {
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) completeDrawing();
+          };
+          gurumahanPhoto.src = 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/45fcfa489_image.png';
+          
+          function completeDrawing() {
+            // Set text rendering for crisp text
+            ctx.textBaseline = 'top';
+            
+            // Foundation name - much clearer and larger, positioned exactly like preview
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 14px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            
+            // Draw "UNIVERSAL PEACE FOUNDATION" with proper letter spacing
+            const foundationText = 'UNIVERSAL PEACE FOUNDATION';
+            const letterSpacing = 6;
+            const totalWidth = ctx.measureText(foundationText).width + (foundationText.length - 1) * letterSpacing;
+            let x = 400 - totalWidth / 2;
+            
+            for (let i = 0; i < foundationText.length; i++) {
+              ctx.fillText(foundationText[i], x, 105);
+              x += ctx.measureText(foundationText[i]).width + letterSpacing;
+            }
+            
+            // Certificate title - positioned like preview
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 32px Georgia, serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('CERTIFICATE OF APPRECIATION', 400, 135);
+            
+            // Decorative line (matching preview position and size)
+            const gradient = ctx.createLinearGradient(320, 175, 480, 175);
+            gradient.addColorStop(0, '#059669');
+            gradient.addColorStop(1, '#3b82f6');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(320, 172, 160, 3);
+            
+            // Certificate text - positioned like preview
+            ctx.fillStyle = '#475569';
+            ctx.font = '16px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('This certificate is proudly presented to', 400, 215);
+            
+            // Name (positioned like preview)
+            const fullName = `${pledgeData.firstName} ${pledgeData.lastName}`;
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 38px Georgia, serif';
+            ctx.fillText(fullName, 400, 250);
+            
+            // Description (positioned like preview)
+            ctx.fillStyle = '#334155';
+            ctx.font = '15px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            
+            const description1 = 'in sincere appreciation for joining millions worldwide in the Global Peace Pledge,';
+            const description2 = 'demonstrating commitment to world harmony and universal brotherhood.';
+            
+            ctx.fillText(description1, 400, 305);
+            ctx.fillText(description2, 400, 325);
+            
+            // Single centered section with GuruMahan info and date
+            // GuruMahan's photo and info (centered)
+            if (gurumahanPhoto.complete && gurumahanPhoto.naturalWidth > 0) {
+              // Draw circular photo with high quality - centered
+              ctx.save();
+              ctx.imageSmoothingEnabled = true;
+              ctx.imageSmoothingQuality = 'high';
+              ctx.beginPath();
+              ctx.arc(400, 420, 48, 0, 2 * Math.PI); // Centered position
+              ctx.clip();
+              ctx.drawImage(gurumahanPhoto, 352, 372, 96, 96);
+              ctx.restore();
+              
+              // Add circular border
+              ctx.strokeStyle = '#e5e7eb';
+              ctx.lineWidth = 3;
+              ctx.beginPath();
+              ctx.arc(400, 420, 48, 0, 2 * Math.PI);
+              ctx.stroke();
+            } else {
+              // Fallback: draw placeholder circle centered
+              ctx.fillStyle = '#f3f4f6';
+              ctx.beginPath();
+              ctx.arc(400, 420, 48, 0, 2 * Math.PI);
+              ctx.fill();
+              
+              ctx.fillStyle = '#6b7280';
+              ctx.font = 'bold 20px Arial, sans-serif';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText('GM', 400, 420);
+            }
+            
+            // GuruMahan's name and title - centered
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = '#334155';
+            ctx.font = 'bold 14px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('His Holiness GuruMahan', 400, 485);
+            
+            ctx.fillStyle = '#64748b';
+            ctx.font = '12px Arial, sans-serif';
+            ctx.fillText('Founder & Spiritual Leader', 400, 505);
+            
+            // Date and location - centered below
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 11px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('GLOBAL PEACE DAY', 400, 535);
+            
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 16px Arial, sans-serif';
+            ctx.fillText('November 11, 2025', 400, 555);
+            
+            ctx.fillStyle = '#475569';
+            ctx.font = '14px Arial, sans-serif';
+            ctx.fillText('Pondicherry, India', 400, 575);
+            
+            // Certificate is complete - no signature section
+            resolve(canvas);
+          }
+        });
+      }
+
+      // PDF Download
+      document.getElementById('downloadCertificatePDF').addEventListener('click', async function() {
+        if (!pledgeData.firstName) {
+          alert('Please submit the pledge form first!');
+          return;
+        }
+
+        try {
+          // Check if jsPDF is available
+          if (typeof window.jspdf === 'undefined') {
+            throw new Error('jsPDF library not loaded');
+          }
+          
+          // Show loading message
+          const button = this;
+          const originalText = button.innerHTML;
+          button.innerHTML = '<span>Generating PDF...</span>';
+          button.disabled = true;
+          
+          const canvas = await createCertificateCanvas();
+          
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm',
+            format: 'a4'
+          });
+          
+          const imgData = canvas.toDataURL('image/png');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          
+          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+          pdf.save(`Peace-Pledge-Certificate-${pledgeData.firstName}-${pledgeData.lastName}.pdf`);
+          
+          // Reset button
+          button.innerHTML = originalText;
+          button.disabled = false;
+          
+        } catch (error) {
+          console.error('Error generating PDF:', error);
+          alert(`Error generating PDF certificate: ${error.message}. Please try again or contact support.`);
+          
+          // Reset button on error
+          const button = this;
+          button.innerHTML = button.innerHTML.replace('Generating PDF...', originalText || 'Download Certificate (PDF)');
+          button.disabled = false;
+        }
+      });
+
+      // Image Download
+      document.getElementById('downloadCertificateImage').addEventListener('click', async function() {
+        if (!pledgeData.firstName) {
+          alert('Please submit the pledge form first!');
+          return;
+        }
+
+        try {
+          // Show loading message
+          const button = this;
+          const originalText = button.innerHTML;
+          button.innerHTML = '<span>Generating Image...</span>';
+          button.disabled = true;
+          
+          const canvas = await createCertificateCanvas();
+          
+          // Download as high-quality image
+          const link = document.createElement('a');
+          link.download = `Peace-Pledge-Certificate-${pledgeData.firstName}-${pledgeData.lastName}.png`;
+          link.href = canvas.toDataURL('image/png', 1.0);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Reset button
+          button.innerHTML = originalText;
+          button.disabled = false;
+          
+        } catch (error) {
+          console.error('Error generating image:', error);
+          alert(`Error generating image certificate: ${error.message}. Please try again or contact support.`);
+          
+          // Reset button on error
+          const button = this;
+          button.innerHTML = button.innerHTML.replace('Generating Image...', originalText || 'Download Certificate (Image)');
+          button.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+ul.auto-complete-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	position: absolute !important;
+	z-index: 10000000000000000000000;
+	max-height: 360px;
+	overflow: auto;
+	font: 13px arial;
+	color:#909090;
+	width: 302px !important;
+	margin-left: -1px;
+	/*top: 90px !important; */
+}
+
+ul.auto-complete-list li {
+	list-style-type: none;
+	margin: 0;
+	padding: 8px 25px;
+	background-color: white;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	color:#909090;
+	cursor: pointer;
+}
+
+ul.auto-complete-list li.auto-complete-list-rollover {
+	background-color: #E8E8E8;
+	color:#006699;
+}
+
+ul.auto-complete-list .auto-complete-striped {
+	background-color: #E8E8E8;
+}
+
+
+
+
+/* ===========================
+   ====== Media Queries ====== 
+   =========================== */
+/*------smallphones----------------*/  
+@media only screen and (min-width : 240px) and (max-width : 480px)
+{
+	ul.auto-complete-list {left: 10px !important; width: 94% !important;}
+}
+/*------iphone----------------*/  
+@media only screen and (min-width : 320px) and (max-width : 480px)
+{
+	
+}
+/*------smalltablet----------------*/  
+@media only screen and (min-width : 480px) and (max-width : 768px)
+{
+	ul.auto-complete-list {left: 10px !important; width: 94% !important;}
+}
+/*--------iPad - Portrait--------------*/
+@media only screen and (min-width : 768px) and (max-width : 960px)
+{
+
+}
+@media only screen and (min-width : 960px) and (max-width : 1024px)
+{
+	
+}
+@media only screen and (min-width : 960px) and (max-width : 1200px)
+{
+	
+}
+@media only screen and (min-width : 1200px) and (max-width : 1366px)
+{
+	
+}
